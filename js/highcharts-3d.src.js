@@ -1392,6 +1392,8 @@
     });
     function draw3DPoints(proceed) {
         // Do not do this if the chart is not 3D
+    function draw3DPoints(proceed) {
+        // Do not do this if the chart is not 3D
         if (this.chart.is3d()) {
             var grouping = this.chart.options.plotOptions.column.grouping;
             if (grouping !== undefined && !grouping && this.group.zIndex !== undefined && !this.zIndexSet) {
@@ -1399,7 +1401,8 @@
                 this.zIndexSet = true; // #4062 set zindex only once
             }
 
-            var options = this.options,
+            var config = this;
+                options = this.options,
                 states = this.options.states;
 
             this.borderWidth = options.borderWidth = defined(options.edgeWidth) ? options.edgeWidth : 1; //#4055
@@ -1409,11 +1412,11 @@
                     var pointAttr = point.pointAttr;
 
                     // Set the border color to the fill color to provide a smooth edge
-                    this.borderColor = Highcharts.pick(options.edgeColor, pointAttr[''].fill);
+                    config.borderColor = Highcharts.pick(options.edgeColor, pointAttr[''].fill);
 
-                    pointAttr[''].stroke = this.borderColor;
-                    pointAttr.hover.stroke = Highcharts.pick(states.hover.edgeColor, this.borderColor);
-                    pointAttr.select.stroke = Highcharts.pick(states.select.edgeColor, this.borderColor);
+                    pointAttr[''].stroke = config.borderColor;
+                    pointAttr.hover.stroke = Highcharts.pick(states.hover.edgeColor, config.borderColor);
+                    pointAttr.select.stroke = Highcharts.pick(states.select.edgeColor, config.borderColor);
                 }
             });
         }
